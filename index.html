@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unidad Educativa Eloy Alfaro</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- CABECERA -->
+  <header class="header">
+    <a href="#inicio" class="brand">
+      <img class="logo" src="logo.jpeg" alt="Escudo institucional">
+      <div>
+        <span class="brand-small">UNIDAD EDUCATIVA</span>
+        <strong>ELOY ALFARO</strong>
+      </div>
+    </a>
+
+    <nav class="nav">
+      <a href="#inicio">Inicio</a>
+      <a href="#eventos">Eventos</a>
+      <a href="docentes.html">Docentes</a>
+      <button class="btn btn-outline" id="loginBtn" type="button">
+        Administrador
+      </button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- PORTADA -->
+    <section class="hero" id="inicio">
+      <div class="hero-content">
+        <span class="eyebrow">INFORMACIÓN INSTITUCIONAL</span>
+        <h1>Unidad Educativa<br><span>Eloy Alfaro</span></h1>
+        <p>
+          Mantente informado sobre nuestras actividades,
+          eventos y fechas importantes de la institución.
+        </p>
+        <a href="#eventos" class="btn btn-gold">
+          Ver próximos eventos →
+        </a>
+      </div>
+
+      <div class="hero-decoration">
+        <div class="hero-circle">
+          <img src="logo.jpeg" alt="Escudo de Eloy Alfaro">
+        </div>
+        <div class="hero-caption">Educación · Valores · Futuro</div>
+      </div>
+    </section>
+
+    <!-- EVENTOS -->
+    <section class="events-section" id="eventos">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">AGENDA INSTITUCIONAL</span>
+          <h2>Próximos eventos</h2>
+          <p>Consulta las actividades programadas.</p>
+        </div>
+        <span class="event-count" id="eventCount">0 eventos</span>
+      </div>
+
+      <div class="toolbar">
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Buscar un evento..."
+          aria-label="Buscar eventos"
+        >
+
+        <select id="filterSelect" aria-label="Filtrar eventos">
+          <option value="todos">Todos los eventos</option>
+          <option value="proximos">Próximos eventos</option>
+          <option value="pasados">Eventos anteriores</option>
+        </select>
+      </div>
+
+      <div class="events-grid" id="eventsGrid"></div>
+
+      <p class="empty-message" id="emptyMessage" hidden>
+        No se encontraron eventos.
+      </p>
+    </section>
+
+    <!-- ADMINISTRAR EVENTOS -->
+    <section class="admin-section" id="adminPanel" hidden>
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">ÁREA DE ADMINISTRACIÓN</span>
+          <h2>Administrar eventos</h2>
+          <p>Añade, modifica o elimina eventos.</p>
+        </div>
+
+        <button class="btn btn-outline" id="logoutBtn" type="button">
+          Cerrar sesión
+        </button>
+      </div>
+
+      <form id="eventForm" class="event-form">
+        <h3 id="formTitle">Publicar un evento</h3>
+        <input type="hidden" id="eventId">
+
+        <label for="eventTitle">Nombre del evento</label>
+        <input
+          id="eventTitle"
+          type="text"
+          maxlength="100"
+          placeholder="Ej. Feria de Ciencias"
+          required
+        >
+
+        <div class="form-row">
+          <div>
+            <label for="eventDate">Fecha</label>
+            <input id="eventDate" type="date" required>
+          </div>
+          <div>
+            <label for="eventTime">Hora</label>
+            <input id="eventTime" type="time" required>
+          </div>
+        </div>
+
+        <label for="eventPlace">Lugar</label>
+        <input
+          id="eventPlace"
+          type="text"
+          maxlength="120"
+          placeholder="Lugar del evento"
+          required
+        >
+
+        <label for="eventDescription">Descripción breve</label>
+        <textarea
+          id="eventDescription"
+          rows="4"
+          maxlength="1000"
+          placeholder="Descripción que aparecerá en la tarjeta..."
+          required
+        ></textarea>
+
+        <!-- NUEVOS DETALLES -->
+        <div class="details-admin-heading">
+          <span class="eyebrow">INFORMACIÓN COMPLEMENTARIA</span>
+          <h3>Detalles del evento</h3>
+          <p>
+            Agrega instrucciones, actividades, horarios,
+            requisitos u otra información para los estudiantes.
+          </p>
+        </div>
+
+        <label for="eventDetails">Detalles adicionales</label>
+        <textarea
+          id="eventDetails"
+          rows="6"
+          maxlength="5000"
+          placeholder="Escribe aquí toda la información adicional del evento..."
+        ></textarea>
+
+        <!-- IMAGEN PRINCIPAL -->
+        <label for="eventImage">Imagen principal del evento (opcional)</label>
+        <input
+          id="eventImage"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          aria-describedby="eventImageHelp"
+        >
+
+        <small id="eventImageHelp" class="form-note">
+          Formatos permitidos: JPG, PNG y WEBP. Máximo 5 MB.
+        </small>
+
+        <div id="eventImagePreview" class="event-image-preview" hidden>
+          <img
+            id="eventImagePreviewImg"
+            alt="Vista previa de la imagen principal"
+          >
+
+          <button
+            type="button"
+            class="btn btn-outline"
+            id="removeEventImageBtn"
+          >
+            Quitar imagen principal
+          </button>
+        </div>
+
+        <!-- IMÁGENES DE LOS DETALLES -->
+        <label for="detailImages">Imágenes adicionales de los detalles</label>
+        <input
+          id="detailImages"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          multiple
+          aria-describedby="detailImagesHelp"
+        >
+
+        <small id="detailImagesHelp" class="form-note">
+          Puedes agregar hasta 5 imágenes adicionales.
+          Formatos JPG, PNG y WEBP. Máximo 5 MB por archivo.
+        </small>
+
+        <div
+          id="detailImagesPreview"
+          class="detail-images-preview"
+        ></div>
+
+        <div class="form-actions">
+          <button class="btn btn-gold" type="submit" id="saveBtn">
+            Publicar evento
+          </button>
+
+          <button
+            class="btn btn-outline"
+            type="button"
+            id="cancelEditBtn"
+            hidden
+          >
+            Cancelar edición
+          </button>
+        </div>
+
+        <p class="form-note" id="formMessage" role="status"></p>
+      </form>
+
+      <!-- LISTA DE EVENTOS ADMINISTRABLES -->
+      <h3 class="manage-heading">Eventos publicados</h3>
+      <div id="manageEvents" class="manage-list"></div>
+    </section>
+
+    <!-- ACCESO DE ADMINISTRADOR -->
+    <section class="login-section" id="loginPanel" hidden>
+      <form class="login-card" id="loginForm">
+        <div class="login-icon">
+          <img
+            src="seguridad.jpeg"
+            alt="Imagen de acceso de administrador"
+          >
+        </div>
+
+        <span class="eyebrow">ACCESO RESTRINGIDO</span>
+        <h2>Administrador</h2>
+        <p>Ingresa la contraseña para gestionar los eventos.</p>
+
+        <label for="passwordInput">Contraseña</label>
+        <input
+          id="passwordInput"
+          type="password"
+          placeholder="Escribe la contraseña"
+          required
+        >
+
+        <button class="btn btn-gold btn-full" type="submit">
+          Iniciar sesión
+        </button>
+
+        <p class="form-note" id="loginMessage" role="status"></p>
+
+        <button type="button" class="text-button" id="backBtn">
+          Volver a la página principal
+        </button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- VENTANA DE DETALLES -->
+  <section
+    id="detailsModal"
+    class="details-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="detailsModalTitle"
+    hidden
+  >
+    <div class="details-content">
+      <button
+        type="button"
+        id="closeDetailsBtn"
+        class="btn btn-outline details-close"
+        aria-label="Cerrar detalles"
+      >
+        ✕ Cerrar
+      </button>
+
+      <span class="eyebrow">INFORMACIÓN DEL EVENTO</span>
+
+      <h2 id="detailsModalTitle"></h2>
+
+      <p id="detailsModalMeta" class="card-detail"></p>
+
+      <div
+        id="detailsModalDescription"
+        class="details-description"
+      ></div>
+
+      <div class="details-extra-section">
+        <h3>Detalles adicionales</h3>
+
+        <div
+          id="detailsModalText"
+          class="details-description"
+        ></div>
+      </div>
+
+      <div id="detailsImagesSection">
+        <h3>Galería de imágenes</h3>
+        <div
+          id="detailsModalImages"
+          class="details-modal-images"
+        ></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="footer">
+    <img class="logo logo-footer" src="logo.jpeg" alt="Escudo institucional">
+    <p><strong>Unidad Educativa Eloy Alfaro</strong></p>
+    <p>Agenda institucional · Educación, valores y futuro</p>
+    <small>
+      © <span id="currentYear"></span> Unidad Educativa Eloy Alfaro
+    </small>
+  </footer>
+
+</body>
+</html>

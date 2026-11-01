@@ -1,0 +1,849 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal docente | Unidad Educativa Eloy Alfaro</title>
+
+  <style>
+    :root {
+      --azul: #123b67;
+      --azul-oscuro: #092744;
+      --azul-claro: #eaf2fa;
+      --dorado: #d9ae4b;
+      --blanco: #ffffff;
+      --texto: #26374a;
+      --gris: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f4f7fb;
+      color: var(--texto);
+      line-height: 1.6;
+    }
+
+    /* MENÚ */
+    .navbar {
+      background: var(--blanco);
+      padding: 14px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: 0 3px 18px #102f5010;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--azul);
+      text-decoration: none;
+    }
+
+    /* LOGO INSTITUCIONAL */
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      display: block;
+      flex-shrink: 0;
+      border-radius: 50%;
+      border: 2px solid var(--dorado);
+      background: white;
+      padding: 3px;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .brand-text small {
+      display: block;
+      color: var(--gris);
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 22px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--texto);
+      font-weight: 600;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #b58621;
+    }
+
+    /* PORTADA CON IMAGEN */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(9, 39, 68, 0.88),
+          rgba(18, 59, 103, 0.45)
+        ),
+        url("docentes.jpeg") center 40% / cover no-repeat;
+      color: white;
+      padding: 90px 7%;
+      min-height: 360px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border: 1px solid #ffffff18;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 350px;
+      height: 350px;
+      right: -80px;
+      top: -140px;
+    }
+
+    .hero::after {
+      width: 260px;
+      height: 260px;
+      right: 40px;
+      bottom: -180px;
+    }
+
+    .hero-content {
+      max-width: 850px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: var(--dorado);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 53px);
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      color: var(--dorado);
+    }
+
+    .hero p {
+      max-width: 650px;
+      color: #e1eaf5;
+      font-size: 17px;
+      margin-bottom: 25px;
+    }
+
+    .hero-button {
+      display: inline-block;
+      padding: 12px 22px;
+      background: var(--dorado);
+      color: var(--azul-oscuro);
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .hero-button:hover {
+      transform: translateY(-2px);
+      background: #f0cb72;
+    }
+
+    /* CONTENIDO */
+    .container {
+      width: min(1120px, 90%);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 55px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .section-heading .eyebrow {
+      color: #a77917;
+      margin-bottom: 5px;
+    }
+
+    .section-heading h2 {
+      color: var(--azul);
+      font-size: clamp(25px, 4vw, 34px);
+      margin-bottom: 8px;
+    }
+
+    .section-heading p {
+      color: var(--gris);
+    }
+
+    /* TARJETAS DE AUTORIDADES */
+    .leadership-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .person-card {
+      background: white;
+      padding: 25px 16px;
+      text-align: center;
+      border-radius: 13px;
+      border: 1px solid #e4eaf1;
+      border-bottom: 4px solid var(--dorado);
+      box-shadow: 0 8px 24px #153b6110;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .person-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 30px #153b611a;
+    }
+
+    .person-icon {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 15px;
+      background: var(--azul-claro);
+      border: 2px solid #d9e6f4;
+      color: var(--azul);
+      font-size: 27px;
+      font-weight: 800;
+    }
+
+    .person-card .role {
+      display: block;
+      color: #a77917;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .person-card h3 {
+      color: var(--azul);
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    /* LISTADO DOCENTE */
+    .staff-section {
+      background: white;
+      border-top: 1px solid #e6edf4;
+      border-bottom: 1px solid #e6edf4;
+    }
+
+    .staff-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .staff-tools input,
+    .staff-tools select {
+      font: inherit;
+      padding: 12px 14px;
+      border: 1px solid #d6e0eb;
+      border-radius: 8px;
+      background: white;
+      outline: none;
+    }
+
+    .staff-tools input {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .staff-tools select {
+      min-width: 190px;
+    }
+
+    .staff-tools input:focus,
+    .staff-tools select:focus {
+      border-color: var(--azul);
+      box-shadow: 0 0 0 3px #123b6714;
+    }
+
+    .staff-count {
+      color: var(--gris);
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #e0e8f1;
+      border-radius: 12px;
+      box-shadow: 0 6px 22px #123b670b;
+      background: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    thead {
+      background: var(--azul);
+      color: white;
+    }
+
+    th {
+      padding: 16px;
+      text-align: left;
+      font-size: 13px;
+      letter-spacing: 0.4px;
+    }
+
+    td {
+      padding: 13px 16px;
+      border-bottom: 1px solid #edf1f5;
+      font-size: 14px;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f7f9fc;
+    }
+
+    tbody tr:hover {
+      background: #edf4fb;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .number {
+      color: #a77917;
+      font-weight: 800;
+      width: 65px;
+    }
+
+    .role-label {
+      display: inline-block;
+      padding: 4px 9px;
+      background: var(--azul-claro);
+      color: var(--azul);
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .no-results {
+      padding: 28px;
+      text-align: center;
+      color: var(--gris);
+      display: none;
+    }
+
+    /* PIE DE PÁGINA */
+    footer {
+      background: var(--azul-oscuro);
+      color: white;
+      text-align: center;
+      padding: 30px 15px;
+    }
+
+    .footer-mark {
+      color: var(--dorado);
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    footer strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    footer p {
+      color: #c8d6e5;
+      font-size: 13px;
+    }
+
+    footer small {
+      display: block;
+      color: #9fb2c7;
+      margin-top: 15px;
+    }
+
+    /* DISEÑO RESPONSIVE */
+    @media (max-width: 900px) {
+      .leadership-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .hero {
+        padding: 55px 6%;
+      }
+
+      .leadership-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 40px 0;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .nav-links a {
+        font-size: 13px;
+      }
+
+      .staff-tools {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .staff-tools select {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- MENÚ PRINCIPAL -->
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <img
+        class="brand-logo"
+        src="logo.jpeg"
+        alt="Escudo de la Unidad Educativa Eloy Alfaro"
+      >
+
+      <div class="brand-text">
+        <small>UNIDAD EDUCATIVA</small>
+        <strong>ELOY ALFARO</strong>
+      </div>
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="index.html#eventos">Eventos</a>
+      <a href="#autoridades">Autoridades</a>
+      <a href="#personal" class="active">Docentes</a>
+    </nav>
+  </header>
+
+  <!-- PORTADA -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="eyebrow">NUESTRA COMUNIDAD EDUCATIVA</span>
+
+      <h1>
+        Conoce a nuestros<br>
+        <span>Docentes y Autoridades</span>
+      </h1>
+
+      <p>
+        Un equipo comprometido con la educación, los valores y el futuro
+        de nuestros estudiantes. Conoce a los profesionales que forman
+        parte de la Unidad Educativa Eloy Alfaro.
+      </p>
+
+      <a href="#personal" class="hero-button">
+        Ver nuestro personal ↓
+      </a>
+    </div>
+  </section>
+
+  <main>
+    <!-- AUTORIDADES -->
+    <section class="section" id="autoridades">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">LIDERAZGO INSTITUCIONAL</span>
+          <h2>Nuestras autoridades</h2>
+          <p>
+            Profesionales que orientan y acompañan la labor educativa.
+          </p>
+        </div>
+
+        <div class="leadership-grid">
+          <article class="person-card">
+            <div class="person-icon">B</div>
+            <span class="role">Rectora</span>
+            <h3>Lic. Bertha Zurita</h3>
+          </article>
+
+          <article class="person-card">
+            <div class="person-icon">A</div>
+            <span class="role">Vicerrectora</span>
+            <h3>Prof. Anavela Saá</h3>
+          </article>
+
+          <article class="person-card">
+            <div class="person-icon">Á</div>
+            <span class="role">Inspector general</span>
+            <h3>MSc. Álvaro Viteri</h3>
+          </article>
+
+          <article class="person-card">
+            <div class="person-icon">C</div>
+            <span class="role">DECE</span>
+            <h3>Lic. Carolina Montúfar</h3>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERSONAL DOCENTE -->
+    <section class="section staff-section" id="personal">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">EQUIPO DOCENTE</span>
+          <h2>Nuestro personal educativo</h2>
+          <p>
+            Consulta los cargos, áreas y nombres de nuestro equipo.
+          </p>
+        </div>
+
+        <div class="staff-tools">
+          <input
+            type="search"
+            id="searchStaff"
+            placeholder="Buscar por nombre, curso o cargo..."
+            aria-label="Buscar personal docente"
+          >
+
+          <select id="filterStaff" aria-label="Filtrar por área">
+            <option value="todos">Todas las áreas</option>
+            <option value="inicial">Inicial y preparatoria</option>
+            <option value="basica">Educación básica</option>
+            <option value="bachillerato">Bachillerato</option>
+            <option value="especial">Áreas especiales</option>
+          </select>
+        </div>
+
+        <p class="staff-count" id="staffCount">
+          26 integrantes del personal
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>N.º</th>
+                <th>Cargo o área</th>
+                <th>Nombre del profesional</th>
+              </tr>
+            </thead>
+
+            <tbody id="staffTable">
+              <tr data-area="inicial">
+                <td class="number">01</td>
+                <td><span class="role-label">Inicial I</span></td>
+                <td>Prof. María Benítez</td>
+              </tr>
+
+              <tr data-area="inicial">
+                <td class="number">02</td>
+                <td><span class="role-label">Inicial II</span></td>
+                <td>Lic. Doris Simbaña</td>
+              </tr>
+
+              <tr data-area="inicial">
+                <td class="number">03</td>
+                <td><span class="role-label">Preparatoria</span></td>
+                <td>Prof. Yadira Romero</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">04</td>
+                <td><span class="role-label">Segundo año</span></td>
+                <td>Prof. Marcia Álvarez</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">05</td>
+                <td><span class="role-label">Tercer año</span></td>
+                <td>Lic. Gladys Zurita</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">06</td>
+                <td><span class="role-label">Cuarto año</span></td>
+                <td>Lic. Patricia Cruz</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">07</td>
+                <td><span class="role-label">Quinto año A</span></td>
+                <td>Lic. Mónica Gallegos</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">08</td>
+                <td><span class="role-label">Quinto año B</span></td>
+                <td>Prof. Matilde Carabali</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">09</td>
+                <td><span class="role-label">Sexto año A</span></td>
+                <td>Lic. Rodolfo Salas</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">10</td>
+                <td><span class="role-label">Sexto año B</span></td>
+                <td>Lic. Cristina Espinosa</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">11</td>
+                <td><span class="role-label">Séptimo año A</span></td>
+                <td>Lic. Patricio Sánchez</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">12</td>
+                <td><span class="role-label">Séptimo año B</span></td>
+                <td>Prof. Marcelo Barahona</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">13</td>
+                <td><span class="role-label">Octavo año A — Tutora</span></td>
+                <td>Lic. Evelyn Armas</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">14</td>
+                <td><span class="role-label">Octavo año B — Tutora</span></td>
+                <td>Ing. Cristina Recalde</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">15</td>
+                <td><span class="role-label">Noveno año A — Tutora</span></td>
+                <td>MSc. Yadira Benavides</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">16</td>
+                <td><span class="role-label">Noveno año B — Tutor</span></td>
+                <td>Lic. Digson Benalcázar</td>
+              </tr>
+
+              <tr data-area="basica">
+                <td class="number">17</td>
+                <td><span class="role-label">Décimo año — Tutor</span></td>
+                <td>Lic. José Cachimuel</td>
+              </tr>
+
+              <tr data-area="bachillerato">
+                <td class="number">18</td>
+                <td>
+                  <span class="role-label">
+                    Primero Bachillerato — Tutor
+                  </span>
+                </td>
+                <td>MSc. Danny Vinueza</td>
+              </tr>
+
+              <tr data-area="bachillerato">
+                <td class="number">19</td>
+                <td>
+                  <span class="role-label">
+                    Segundo Bachillerato — Tutor
+                  </span>
+                </td>
+                <td>Lic. Anival Calderón</td>
+              </tr>
+
+              <tr data-area="bachillerato">
+                <td class="number">20</td>
+                <td>
+                  <span class="role-label">
+                    Tercero Bachillerato — Tutor
+                  </span>
+                </td>
+                <td>MSc. Jacobo Suárez</td>
+              </tr>
+
+              <tr data-area="bachillerato">
+                <td class="number">21</td>
+                <td>
+                  <span class="role-label">Bachillerato técnico</span>
+                </td>
+                <td>MSc. Mayra Almeida</td>
+              </tr>
+
+              <tr data-area="bachillerato">
+                <td class="number">22</td>
+                <td>
+                  <span class="role-label">Bachillerato técnico</span>
+                </td>
+                <td>Tng. Andrés Peñafiel</td>
+              </tr>
+
+              <tr data-area="especial">
+                <td class="number">23</td>
+                <td><span class="role-label">LYL y PPE</span></td>
+                <td>MSc. Xavier Muñoz</td>
+              </tr>
+
+              <tr data-area="especial">
+                <td class="number">24</td>
+                <td>
+                  <span class="role-label">Educación Física</span>
+                </td>
+                <td>MSc. Jefferson Grijalva</td>
+              </tr>
+
+              <tr data-area="especial">
+                <td class="number">25</td>
+                <td>
+                  <span class="role-label">Lengua extranjera</span>
+                </td>
+                <td>Lic. Verónica Almeida</td>
+              </tr>
+
+              <tr data-area="especial">
+                <td class="number">26</td>
+                <td><span class="role-label">E.C.A.</span></td>
+                <td>Dr. Galo Álvarez</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="no-results" id="noResults">
+            No se encontraron resultados.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <div class="footer-mark">✦</div>
+    <strong>Unidad Educativa Eloy Alfaro</strong>
+    <p>Educación · Valores · Futuro</p>
+    <small>
+      © <span id="year"></span> Unidad Educativa Eloy Alfaro
+    </small>
+  </footer>
+
+  <!-- BUSCADOR Y FILTROS -->
+  <script>
+    const searchInput = document.getElementById("searchStaff");
+    const filterSelect = document.getElementById("filterStaff");
+    const rows = Array.from(
+      document.querySelectorAll("#staffTable tr")
+    );
+    const countLabel = document.getElementById("staffCount");
+    const noResults = document.getElementById("noResults");
+
+    function normalizeText(text) {
+      return text
+        .toLocaleLowerCase("es")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function filterStaff() {
+      const query = normalizeText(searchInput.value.trim());
+      const area = filterSelect.value;
+      let visible = 0;
+
+      rows.forEach(row => {
+        const text = normalizeText(row.textContent);
+        const matchesText = text.includes(query);
+        const matchesArea =
+          area === "todos" || row.dataset.area === area;
+        const show = matchesText && matchesArea;
+
+        row.style.display = show ? "" : "none";
+
+        if (show) {
+          visible++;
+        }
+      });
+
+      countLabel.textContent =
+        visible +
+        (visible === 1
+          ? " integrante encontrado"
+          : " integrantes encontrados");
+
+      noResults.style.display = visible === 0 ? "block" : "none";
+    }
+
+    searchInput.addEventListener("input", filterStaff);
+    filterSelect.addEventListener("change", filterStaff);
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    filterStaff();
+  </script>
+</body>
+</html>
