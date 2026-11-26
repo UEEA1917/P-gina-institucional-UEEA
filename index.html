@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Información institucional, eventos y actividades de la Unidad Educativa Eloy Alfaro de Urcuquí.">
   <title>Unidad Educativa Eloy Alfaro</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -21,13 +21,14 @@
       </div>
     </a>
 
-    <nav class="nav">
+    <nav class="nav" aria-label="Navegación principal">
       <a href="#inicio">Inicio</a>
+      <a href="#mision">Misión</a>
+      <a href="#vision">Visión</a>
       <a href="#eventos">Eventos</a>
+      <a href="#opiniones">Opiniones</a>
       <a href="docentes.html">Docentes</a>
-      <button class="btn btn-outline" id="loginBtn" type="button">
-        Administrador
-      </button>
+      <button class="btn btn-outline" id="loginBtn" type="button">Administrador</button>
     </nav>
   </header>
 
@@ -42,9 +43,20 @@
           Mantente informado sobre nuestras actividades,
           eventos y fechas importantes de la institución.
         </p>
-        <a href="#eventos" class="btn btn-gold">
-          Ver próximos eventos →
-        </a>
+        <a href="#eventos" class="btn btn-gold">Ver próximos eventos →</a>
+
+        <div class="hero-quick-links">
+          <a class="hero-link" href="https://maps.app.goo.gl/odZ7FabnZwVPyiP2A?g_st=ac"
+             target="_blank" rel="noopener noreferrer">
+            <span class="hero-link-icon" aria-hidden="true">📍</span>
+            <span><strong>Ubicación institucional</strong><small>Cómo llegar con Google Maps</small></span>
+          </a>
+          <a class="hero-link" href="https://www.facebook.com/share/1JTcb5xWbX/"
+             target="_blank" rel="noopener noreferrer">
+            <span class="hero-link-icon" aria-hidden="true">f</span>
+            <span><strong>Facebook institucional</strong><small>Visita nuestra página</small></span>
+          </a>
+        </div>
       </div>
 
       <div class="hero-decoration">
@@ -53,6 +65,37 @@
         </div>
         <div class="hero-caption">Educación · Valores · Futuro</div>
       </div>
+    </section>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <section class="institution-section" aria-label="Identidad institucional">
+      <article class="institution-card" id="mision">
+        <span class="eyebrow">NUESTRA IDENTIDAD</span>
+        <h2>MISIÓN</h2>
+        <p>
+          La Unidad Educativa “Eloy Alfaro” tiene como misión la formación de
+          estudiantes, la cual está orientada hacia la consecución de una
+          educación integral de conocimientos, valores y destrezas para
+          contribuir con el desarrollo de la comunidad, la conservación y
+          promoción de la cultura y el medio ambiente.
+        </p>
+      </article>
+
+      <article class="institution-card" id="vision">
+        <span class="eyebrow">NUESTRO FUTURO</span>
+        <h2>VISIÓN</h2>
+        <p>
+          La Unidad Educativa “Eloy Alfaro“ tiene como visión: desarrollar sus
+          actividades educativas dirigidas a la niñez y juventud, dentro de un
+          espacio amplio y funcional para de esta manera entregar a la sociedad
+          estudiantes preparados para continuar sus estudios en cualquier
+          institución educativa y así puedan participar activamente en la vida
+          política, social y económica del país, siendo ciudadanos ecuatorianos
+          conscientes de su rol histórico, consolidándose así el prestigio de
+          la institución y ubicándose en un lugar destacado entre los diferentes
+          establecimientos educativos de la región.
+        </p>
+      </article>
     </section>
 
     <!-- EVENTOS -->
@@ -67,13 +110,7 @@
       </div>
 
       <div class="toolbar">
-        <input
-          type="search"
-          id="searchInput"
-          placeholder="Buscar un evento..."
-          aria-label="Buscar eventos"
-        >
-
+        <input type="search" id="searchInput" placeholder="Buscar un evento..." aria-label="Buscar eventos">
         <select id="filterSelect" aria-label="Filtrar eventos">
           <option value="todos">Todos los eventos</option>
           <option value="proximos">Próximos eventos</option>
@@ -82,10 +119,7 @@
       </div>
 
       <div class="events-grid" id="eventsGrid"></div>
-
-      <p class="empty-message" id="emptyMessage" hidden>
-        No se encontraron eventos.
-      </p>
+      <p class="empty-message" id="emptyMessage" hidden>No se encontraron eventos.</p>
     </section>
 
     <!-- ADMINISTRAR EVENTOS -->
@@ -96,10 +130,7 @@
           <h2>Administrar eventos</h2>
           <p>Añade, modifica o elimina eventos.</p>
         </div>
-
-        <button class="btn btn-outline" id="logoutBtn" type="button">
-          Cerrar sesión
-        </button>
+        <button class="btn btn-outline" id="logoutBtn" type="button">Cerrar sesión</button>
       </div>
 
       <form id="eventForm" class="event-form">
@@ -107,13 +138,7 @@
         <input type="hidden" id="eventId">
 
         <label for="eventTitle">Nombre del evento</label>
-        <input
-          id="eventTitle"
-          type="text"
-          maxlength="100"
-          placeholder="Ej. Feria de Ciencias"
-          required
-        >
+        <input id="eventTitle" type="text" maxlength="100" placeholder="Ej. Feria de Ciencias" required>
 
         <div class="form-row">
           <div>
@@ -127,108 +152,48 @@
         </div>
 
         <label for="eventPlace">Lugar</label>
-        <input
-          id="eventPlace"
-          type="text"
-          maxlength="120"
-          placeholder="Lugar del evento"
-          required
-        >
+        <input id="eventPlace" type="text" maxlength="120" placeholder="Lugar del evento" required>
 
         <label for="eventDescription">Descripción breve</label>
-        <textarea
-          id="eventDescription"
-          rows="4"
-          maxlength="1000"
-          placeholder="Descripción que aparecerá en la tarjeta..."
-          required
-        ></textarea>
+        <textarea id="eventDescription" rows="4" maxlength="1000"
+                  placeholder="Descripción que aparecerá en la tarjeta..." required></textarea>
 
-        <!-- NUEVOS DETALLES -->
         <div class="details-admin-heading">
           <span class="eyebrow">INFORMACIÓN COMPLEMENTARIA</span>
           <h3>Detalles del evento</h3>
-          <p>
-            Agrega instrucciones, actividades, horarios,
-            requisitos u otra información para los estudiantes.
-          </p>
+          <p>Agrega instrucciones, actividades, horarios, requisitos u otra información para los estudiantes.</p>
         </div>
 
         <label for="eventDetails">Detalles adicionales</label>
-        <textarea
-          id="eventDetails"
-          rows="6"
-          maxlength="5000"
-          placeholder="Escribe aquí toda la información adicional del evento..."
-        ></textarea>
+        <textarea id="eventDetails" rows="6" maxlength="5000"
+                  placeholder="Escribe aquí toda la información adicional del evento..."></textarea>
 
-        <!-- IMAGEN PRINCIPAL -->
         <label for="eventImage">Imagen principal del evento (opcional)</label>
-        <input
-          id="eventImage"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          aria-describedby="eventImageHelp"
-        >
-
+        <input id="eventImage" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="eventImageHelp">
         <small id="eventImageHelp" class="form-note">
           Formatos permitidos: JPG, PNG y WEBP. Máximo 5 MB.
         </small>
 
         <div id="eventImagePreview" class="event-image-preview" hidden>
-          <img
-            id="eventImagePreviewImg"
-            alt="Vista previa de la imagen principal"
-          >
-
-          <button
-            type="button"
-            class="btn btn-outline"
-            id="removeEventImageBtn"
-          >
-            Quitar imagen principal
-          </button>
+          <img id="eventImagePreviewImg" alt="Vista previa de la imagen principal">
+          <button type="button" class="btn btn-outline" id="removeEventImageBtn">Quitar imagen principal</button>
         </div>
 
-        <!-- IMÁGENES DE LOS DETALLES -->
         <label for="detailImages">Imágenes adicionales de los detalles</label>
-        <input
-          id="detailImages"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          multiple
-          aria-describedby="detailImagesHelp"
-        >
-
+        <input id="detailImages" type="file" accept="image/jpeg,image/png,image/webp"
+               multiple aria-describedby="detailImagesHelp">
         <small id="detailImagesHelp" class="form-note">
-          Puedes agregar hasta 5 imágenes adicionales.
-          Formatos JPG, PNG y WEBP. Máximo 5 MB por archivo.
+          Puedes agregar hasta 5 imágenes adicionales. Formatos JPG, PNG y WEBP. Máximo 5 MB por archivo.
         </small>
-
-        <div
-          id="detailImagesPreview"
-          class="detail-images-preview"
-        ></div>
+        <div id="detailImagesPreview" class="detail-images-preview"></div>
 
         <div class="form-actions">
-          <button class="btn btn-gold" type="submit" id="saveBtn">
-            Publicar evento
-          </button>
-
-          <button
-            class="btn btn-outline"
-            type="button"
-            id="cancelEditBtn"
-            hidden
-          >
-            Cancelar edición
-          </button>
+          <button class="btn btn-gold" type="submit" id="saveBtn">Publicar evento</button>
+          <button class="btn btn-outline" type="button" id="cancelEditBtn" hidden>Cancelar edición</button>
         </div>
-
         <p class="form-note" id="formMessage" role="status"></p>
       </form>
 
-      <!-- LISTA DE EVENTOS ADMINISTRABLES -->
       <h3 class="manage-heading">Eventos publicados</h3>
       <div id="manageEvents" class="manage-list"></div>
     </section>
@@ -237,83 +202,88 @@
     <section class="login-section" id="loginPanel" hidden>
       <form class="login-card" id="loginForm">
         <div class="login-icon">
-          <img
-            src="seguridad.jpeg"
-            alt="Imagen de acceso de administrador"
-          >
+          <img src="seguridad.jpeg" alt="Imagen de acceso de administrador">
         </div>
-
         <span class="eyebrow">ACCESO RESTRINGIDO</span>
         <h2>Administrador</h2>
         <p>Ingresa la contraseña para gestionar los eventos.</p>
 
         <label for="passwordInput">Contraseña</label>
-        <input
-          id="passwordInput"
-          type="password"
-          placeholder="Escribe la contraseña"
-          required
-        >
+        <input id="passwordInput" type="password" placeholder="Escribe la contraseña" required>
 
-        <button class="btn btn-gold btn-full" type="submit">
-          Iniciar sesión
-        </button>
-
+        <button class="btn btn-gold btn-full" type="submit">Iniciar sesión</button>
         <p class="form-note" id="loginMessage" role="status"></p>
-
-        <button type="button" class="text-button" id="backBtn">
-          Volver a la página principal
-        </button>
+        <button type="button" class="text-button" id="backBtn">Volver a la página principal</button>
       </form>
     </section>
 
+    <!-- FORO / OPINIONES -->
+    <section class="opinions-section" id="opiniones">
+      <div class="opinions-intro">
+        <span class="eyebrow">PARTICIPACIÓN ESTUDIANTIL</span>
+        <h2>OPINIONES Y SUGERENCIAS</h2>
+        <p>
+          Este espacio está destinado a escuchar las ideas, comentarios y
+          sugerencias de los estudiantes para contribuir al mejoramiento de
+          nuestra institución.
+        </p>
+        <p class="opinions-privacy">
+          Tu opinión será enviada al correo institucional y no se publicará
+          en esta página.
+        </p>
+      </div>
+
+      <form class="opinion-form" id="opinionForm"
+            action="https://formsubmit.co/ueea7359@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Nueva opinión - Unidad Educativa Eloy Alfaro">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <label for="opinionName">Nombre del estudiante</label>
+        <input id="opinionName" name="Nombre del estudiante" type="text"
+               maxlength="80" placeholder="Escribe tu nombre" required>
+
+        <label for="opinionCourse">Curso (opcional)</label>
+        <input id="opinionCourse" name="Curso" type="text"
+               maxlength="40" placeholder="Ej. 3ro BTI">
+
+        <label for="opinionText">Tu opinión o sugerencia</label>
+        <textarea id="opinionText" name="Opinión o sugerencia" rows="6"
+                  minlength="10" maxlength="1500"
+                  placeholder="Escribe aquí tu opinión de manera respetuosa..." required></textarea>
+
+        <div class="opinion-form-bottom">
+          <small id="opinionCounter">0 / 1500 caracteres</small>
+          <button class="btn btn-gold" id="sendOpinionBtn" type="submit">
+            Enviar opinión →
+          </button>
+        </div>
+        <p class="form-note" id="opinionMessage" role="status">
+          Por favor, utiliza este espacio con respeto. No incluyas datos personales sensibles.
+        </p>
+      </form>
+    </section>
   </main>
 
   <!-- VENTANA DE DETALLES -->
-  <section
-    id="detailsModal"
-    class="details-modal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="detailsModalTitle"
-    hidden
-  >
+  <section id="detailsModal" class="details-modal" role="dialog" aria-modal="true"
+           aria-labelledby="detailsModalTitle" hidden>
     <div class="details-content">
-      <button
-        type="button"
-        id="closeDetailsBtn"
-        class="btn btn-outline details-close"
-        aria-label="Cerrar detalles"
-      >
-        ✕ Cerrar
-      </button>
-
+      <button type="button" id="closeDetailsBtn" class="btn btn-outline details-close"
+              aria-label="Cerrar detalles">✕ Cerrar</button>
       <span class="eyebrow">INFORMACIÓN DEL EVENTO</span>
-
       <h2 id="detailsModalTitle"></h2>
-
       <p id="detailsModalMeta" class="card-detail"></p>
-
-      <div
-        id="detailsModalDescription"
-        class="details-description"
-      ></div>
+      <div id="detailsModalDescription" class="details-description"></div>
 
       <div class="details-extra-section">
         <h3>Detalles adicionales</h3>
-
-        <div
-          id="detailsModalText"
-          class="details-description"
-        ></div>
+        <div id="detailsModalText" class="details-description"></div>
       </div>
 
       <div id="detailsImagesSection">
         <h3>Galería de imágenes</h3>
-        <div
-          id="detailsModalImages"
-          class="details-modal-images"
-        ></div>
+        <div id="detailsModalImages" class="details-modal-images"></div>
       </div>
     </div>
   </section>
@@ -323,9 +293,12 @@
     <img class="logo logo-footer" src="logo.jpeg" alt="Escudo institucional">
     <p><strong>Unidad Educativa Eloy Alfaro</strong></p>
     <p>Agenda institucional · Educación, valores y futuro</p>
-    <small>
-      © <span id="currentYear"></span> Unidad Educativa Eloy Alfaro
-    </small>
+    <p class="footer-links">
+      <a href="https://maps.app.goo.gl/odZ7FabnZwVPyiP2A?g_st=ac" target="_blank" rel="noopener noreferrer">Ubicación</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://www.facebook.com/share/1JTcb5xWbX/" target="_blank" rel="noopener noreferrer">Facebook</a>
+    </p>
+    <small>© <span id="currentYear"></span> Unidad Educativa Eloy Alfaro</small>
   </footer>
 
 </body>
